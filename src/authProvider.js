@@ -2,7 +2,7 @@ export default {
   // called when the user attempts to log in
   login: ({ username, password }) => {
     const request = new Request(
-      "http://localhost/api_sarayulabs/authenticate.php",
+      "https://api-sarayulabs.herokuapp.com/authenticate.php",
       {
         method: "POST",
         body: JSON.stringify({ username, password }),

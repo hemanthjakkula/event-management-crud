@@ -36,6 +36,7 @@ const useStyles = makeStyles({
 // };
 
 export const UserEventList = (props) => {
+  //for every action checks whether the user is authenticated or not
   useAuthenticated();
   return (
     <div>

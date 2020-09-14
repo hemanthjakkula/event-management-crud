@@ -11,7 +11,7 @@ const SignupForm = (props) => {
   const submit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    fetch("http://localhost/api_sarayulabs/user_registration.php", {
+    fetch("https://api-sarayulabs.herokuapp.com/user_registration.php", {
       method: "POST",
       body: data,
     });

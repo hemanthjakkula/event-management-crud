@@ -1,9 +1,5 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import { fetchUtils } from "react-admin";
-import { useLogin, useNotify, Notification } from "react-admin";
+import { useLogin, useNotify } from "react-admin";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
