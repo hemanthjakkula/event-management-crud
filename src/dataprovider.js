@@ -23,7 +23,7 @@ const dataProvider = {
     };
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
     console.log(localStorage.getItem("token"));
-    //console.log(url);
+    console.log(url);
 
     switch (resource) {
       case "Events.php":
