@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { useLogin, useNotify, Notification } from "react-admin";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const SignupForm = (props) => {
   const [username, setUserName] = useState("");
@@ -18,6 +18,7 @@ const SignupForm = (props) => {
     alert(
       "New User Created, Kindly press LOGIN Button below to go to Login page"
     );
+    useHistory.push("/login");
     //login({ email, password }).catch(() => notify("Invalid email or password"));
   };
 
