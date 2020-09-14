@@ -7,18 +7,36 @@ const SignupForm = (props) => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const request = new Request(
+    "https://api-sarayulabs.herokuapp.com/user_registration.php",
+    {
+      method: "POST",
+      body: data,
+    }
+  );
   const submit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    fetch("https://api-sarayulabs.herokuapp.com/user_registration.php", {
-      method: "POST",
-      body: data,
-    });
-    alert(
-      "New User Created, Kindly press LOGIN Button below to go to Login page"
-    );
-    useHistory.push("/login");
+    return fetch(request)
+      .then((response) => {
+        if (response.status < 200 || response.status >= 300) {
+          throw new Error(response.statusText);
+        }
+        //console.log(response);
+        return response.json();
+      })
+      .then(({ email }) => {
+        if (email !== "AlreadyExists") {
+          //localStorage.setItem("token", token);
+          //console.log(localStorage.getItem("token"));
+          alert("Email already exists, Please Login");
+          return Promise.resolve({ redirectTo: "/login" });
+        } else {
+          //console.log("return called");
+          alert("New User Created");
+          return Promise.reject({ redirectTo: "/login" });
+        }
+      });
     //login({ email, password }).catch(() => notify("Invalid email or password"));
   };
 
