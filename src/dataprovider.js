@@ -22,7 +22,7 @@ const dataProvider = {
       filter: JSON.stringify(params.filter),
     };
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
-    //console.log("getList");
+    console.log(localStorage.getItem("token"));
     //console.log(url);
 
     switch (resource) {
