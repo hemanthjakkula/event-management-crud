@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
-import { useLogin, useNotify, Notification } from "react-admin";
-import { Link, useHistory } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { DateInput } from "react-admin";
 const SignupForm = props => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,19 +22,24 @@ const SignupForm = props => {
         if (response.status < 200 || response.status >= 300) {
           throw new Error(response.statusText);
         }
-        //console.log(response);
+        console.log(response);
         return response.json();
       })
       .then(({ email }) => {
+        console.log(email);
         if (email === "AlreadyExists") {
           //localStorage.setItem("token", token);
           //console.log(localStorage.getItem("token"));
-          alert("Email already exists, Please Login");
-          return Promise.resolve({ redirectTo: "/login" });
+          //alert("Email already exists, Please Login");
+          //return Promise.reject({ redirectTo: "/Login" });
+          window.location = "/#/login";
         } else {
-          //console.log("return called");
-          alert("New User Created");
-          return Promise.resolve({ redirectTo: "/login" });
+          if (email === "success") {
+            console.log("return called");
+            //alert("New User Created");
+            //return Promise.reject({ redirectTo: "/login" });
+            window.location = "/#/login";
+          }
         }
       });
     //login({ email, password }).catch(() => notify("Invalid email or password"));
@@ -63,7 +67,7 @@ const SignupForm = props => {
         <p>Enter password:</p>
         <input
           name="password"
-          type="text"
+          type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
@@ -74,13 +78,8 @@ const SignupForm = props => {
         <button type="submit" value="Submit">
           SUBMIT
         </button>
-
         <p>Submit button creates the user</p>
       </form>
-      <br />
-      <Link to="/login">
-        <button type="button">REDIRECTS TO LOGIN</button>
-      </Link>
     </div>
   );
 };

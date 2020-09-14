@@ -1,5 +1,5 @@
 import React from "react";
-import { Admin, Resource, Login } from "react-admin";
+import { Admin, Resource } from "react-admin";
 import { UserCreateEvent, UserEditEvent, UserEventList } from "./user";
 import authProvider from "./authProvider";
 import StorageIcon from "@material-ui/icons/Storage";
