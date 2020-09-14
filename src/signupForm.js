@@ -27,7 +27,7 @@ const SignupForm = props => {
         return response.json();
       })
       .then(({ email }) => {
-        if (email !== "AlreadyExists") {
+        if (email === "AlreadyExists") {
           //localStorage.setItem("token", token);
           //console.log(localStorage.getItem("token"));
           alert("Email already exists, Please Login");
@@ -35,7 +35,7 @@ const SignupForm = props => {
         } else {
           //console.log("return called");
           alert("New User Created");
-          return Promise.reject({ redirectTo: "/login" });
+          return Promise.resolve({ redirectTo: "/login" });
         }
       });
     //login({ email, password }).catch(() => notify("Invalid email or password"));
