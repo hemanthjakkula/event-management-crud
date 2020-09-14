@@ -3,22 +3,23 @@ import { useState } from "react";
 import { useLogin, useNotify, Notification } from "react-admin";
 import { Link, useHistory } from "react-router-dom";
 
-const SignupForm = (props) => {
+const SignupForm = props => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const request = new Request(
-    "https://api-sarayulabs.herokuapp.com/user_registration.php",
-    {
-      method: "POST",
-      body: data,
-    }
-  );
-  const submit = (e) => {
+
+  const submit = e => {
     e.preventDefault();
     const data = new FormData(e.target);
+    const request = new Request(
+      "https://api-sarayulabs.herokuapp.com/user_registration.php",
+      {
+        method: "POST",
+        body: data
+      }
+    );
     return fetch(request)
-      .then((response) => {
+      .then(response => {
         if (response.status < 200 || response.status >= 300) {
           throw new Error(response.statusText);
         }
@@ -48,7 +49,7 @@ const SignupForm = (props) => {
           name="username"
           type="text"
           value={username}
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={e => setUserName(e.target.value)}
         />
         <br />
         <p>Enter email:</p>
@@ -56,7 +57,7 @@ const SignupForm = (props) => {
           name="email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
         />
         <br />
         <p>Enter password:</p>
@@ -64,7 +65,7 @@ const SignupForm = (props) => {
           name="password"
           type="text"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
         />
         <p>Form Validations will get in future, </p>
         <p>Please fill all the fields </p>
