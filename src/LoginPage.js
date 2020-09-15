@@ -1,51 +1,62 @@
 import React from "react";
-import { useLogin, useNotify } from "react-admin";
-import { useState } from "react";
+import { useLogin } from "react-admin";
 import { Link } from "react-router-dom";
+import {
+  TextInput,
+  SimpleForm,
+  required,
+  PasswordInput,
+  email
+} from "react-admin";
+import Button from "react-bootstrap/Button";
 
-export const LoginPage = (props) => {
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles({
+  email: { width: 544 },
+  password: { display: "inline-block" }
+});
+
+export const LoginPage = props => {
   //useAuthenticated();
-  const [username, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const classes = useStyles();
+  const requiredValidate = [required()];
+  //const validateEmail = email();
+  //const [username, setEmail] = useState("");
+  //const [password, setPassword] = useState("");
   const login = useLogin();
-  const notify = useNotify();
-  const submit = (e) => {
-    e.preventDefault();
-    login({ username, password }).catch(() =>
-      notify("Invalid email or password")
-    );
+  const OnSave = props => {
+    const data = { ...props };
+    console.log(data);
+    login({ ...props });
   };
 
   return (
     <div>
-      <h1>HI THIS IS LOGIN PAGE</h1>
-      <h2>
-        React-admin theme adapted but for signup page created a basic-login
-        page, As more focus is on API
-      </h2>
-      <form onSubmit={submit}>
-        <p>Enter the email: </p>
-        <input
-          name="email"
+      <h2>HI THIS IS LOGIN PAGE</h2>
+      <h5>Please Enter your credentials</h5>
+      <SimpleForm save={OnSave}>
+        <TextInput
           type="email"
-          value={username}
-          onChange={(e) => setEmail(e.target.value)}
+          source="email"
+          validation={{ email: true }}
+          fullWidth
+          formClassName={classes.email}
+          validate={[required(), email()]}
         />
-        <p>Enter Password: </p>
-        <input
-          name="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        <input type="submit" value="Submit" />
-      </form>
-      <br />
 
-      <Link to="/signup">
-        <button type="button">SIGNUP</button>
-      </Link>
+        <PasswordInput
+          type="password"
+          source="password"
+          formClassName={classes.password}
+          validate={requiredValidate}
+        />
+      </SimpleForm>
+      <br />
+      <div className="mb-2">
+        <Button href="#/signup" varient="secondary" size="lg">
+          Signup
+        </Button>{" "}
+      </div>
     </div>
   );
 };

@@ -1,85 +1,92 @@
 import * as React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { DateInput } from "react-admin";
-const SignupForm = props => {
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import {
+  TextInput,
+  SimpleForm,
+  required,
+  PasswordInput,
+  email
+} from "react-admin";
 
-  const submit = e => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const request = new Request(
-      "https://api-sarayulabs.herokuapp.com/user_registration.php",
-      {
-        method: "POST",
-        body: data
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  usename: { display: "inline-block" },
+  email: { width: 544 },
+  password: { display: "inline-block" },
+  confirm_password: { display: "inline-block", marginLeft: 32 }
+});
+
+const onSave = props => {
+  const data = { ...props };
+
+  const request = new Request(
+    "https://api-sarayulabs.herokuapp.com/user_registration.php",
+    {
+      method: "POST",
+      body: JSON.stringify(data)
+    }
+  );
+  return fetch(request)
+    .then(response => {
+      if (response.status < 200 || response.status >= 300) {
+        throw new Error(response.statusText);
       }
-    );
-    return fetch(request)
-      .then(response => {
-        if (response.status < 200 || response.status >= 300) {
-          throw new Error(response.statusText);
-        }
-        console.log(response);
-        return response.json();
-      })
-      .then(({ email }) => {
-        console.log(email);
-        if (email === "AlreadyExists") {
-          //localStorage.setItem("token", token);
-          //console.log(localStorage.getItem("token"));
-          //alert("Email already exists, Please Login");
-          //return Promise.reject({ redirectTo: "/Login" });
+      console.log(response);
+      return response.json();
+    })
+    .then(({ email }) => {
+      console.log(email);
+      if (email === "AlreadyExists") {
+        alert("Email already exists, Please Login");
+        window.location = "/#/login";
+      } else {
+        if (email === "success") {
+          console.log("return called");
+          alert("Account Created");
           window.location = "/#/login";
-        } else {
-          if (email === "success") {
-            console.log("return called");
-            //alert("New User Created");
-            //return Promise.reject({ redirectTo: "/login" });
-            window.location = "/#/login";
-          }
         }
-      });
-    //login({ email, password }).catch(() => notify("Invalid email or password"));
-  };
+      }
+    });
+};
 
+const SignupForm = props => {
+  const classes = useStyles();
+  const requiredValidate = [required()];
+  //const validateEmail = email();
   return (
     <div>
-      <form onSubmit={submit}>
-        <p>Enter Username:</p>
-        <input
-          name="username"
-          type="text"
-          value={username}
-          onChange={e => setUserName(e.target.value)}
+      <h5>Please enter the details to create the account.</h5>
+      <h6>
+        It automatically redirects to login page after new account creation.
+      </h6>
+      <h7>
+        It also detects the already registered users if they try to create new
+        account, can test it.
+      </h7>
+      <SimpleForm save={onSave}>
+        <TextInput
+          autoFocus
+          source="username"
+          formClassName={classes.event_name}
+          validate={requiredValidate}
         />
-        <br />
-        <p>Enter email:</p>
-        <input
-          name="email"
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        <br />
-        <p>Enter password:</p>
-        <input
-          name="password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-        <p>Form Validations will get in future, </p>
-        <p>Please fill all the fields </p>
-        <br />
 
-        <button type="submit" value="Submit">
-          SUBMIT
-        </button>
-        <p>Submit button creates the user</p>
-      </form>
+        <TextInput
+          type="email"
+          source="email"
+          validation={{ email: true }}
+          fullWidth
+          formClassName={classes.email}
+          validate={[required(), email()]}
+        />
+
+        <PasswordInput
+          type="password"
+          source="password"
+          formClassName={classes.password}
+          validate={requiredValidate}
+        />
+      </SimpleForm>
     </div>
   );
 };

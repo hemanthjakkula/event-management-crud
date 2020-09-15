@@ -11,7 +11,7 @@ import {
   DateField,
   DateInput,
   required,
-  useAuthenticated,
+  useAuthenticated
 } from "react-admin";
 
 //import { Box } from "@material-ui/core";
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   event_name: { display: "inline-block" },
   event_date: { dsiplay: "inline-block", marginLeft: 32 },
   event_start_time: { display: "inline-block" },
-  event_end_time: { display: "inline-block", marginLeft: 32 },
+  event_end_time: { display: "inline-block", marginLeft: 32 }
 });
 
 // const SectionTitle = ({ label }: { label: string }) => {
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
 //   );
 // };
 
-export const UserEventList = (props) => {
+export const UserEventList = props => {
   //for every action checks whether the user is authenticated or not
   useAuthenticated();
   return (
@@ -57,7 +57,7 @@ export const UserEventList = (props) => {
   );
 };
 
-export const UserCreateEvent = (props) => {
+export const UserCreateEvent = props => {
   useAuthenticated();
   const classes = useStyles();
   const redirect = (basePath, id, data) => `/Events.php`;
@@ -98,7 +98,7 @@ export const UserCreateEvent = (props) => {
 
 const requiredValidate = [required()];
 
-export const UserEditEvent = (props) => {
+export const UserEditEvent = props => {
   useAuthenticated();
   return (
     <div>

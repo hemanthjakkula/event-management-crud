@@ -1,19 +1,19 @@
 export default {
   // called when the user attempts to log in
-  login: ({ username, password }) => {
+  login: ({ email, password }) => {
     const request = new Request(
       "https://api-sarayulabs.herokuapp.com/authenticate.php",
       {
         method: "POST",
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
         headers: new Headers({
           "Content-Type": "application/json",
-          Accept: "application/json",
-        }),
+          Accept: "application/json"
+        })
       }
     );
     return fetch(request)
-      .then((response) => {
+      .then(response => {
         if (response.status < 200 || response.status >= 300) {
           throw new Error(response.statusText);
         }
@@ -51,5 +51,5 @@ export default {
       : Promise.reject({ redirectTo: "/login" });
   },
   // called when the user navigates to a new location, to check for permissions / roles
-  getPermissions: () => Promise.resolve(),
+  getPermissions: () => Promise.resolve()
 };
