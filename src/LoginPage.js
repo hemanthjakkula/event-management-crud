@@ -17,12 +17,8 @@ const useStyles = makeStyles({
 });
 
 export const LoginPage = props => {
-  //useAuthenticated();
   const classes = useStyles();
   const requiredValidate = [required()];
-  //const validateEmail = email();
-  //const [username, setEmail] = useState("");
-  //const [password, setPassword] = useState("");
   const login = useLogin();
   const OnSave = props => {
     const data = { ...props };
