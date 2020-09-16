@@ -21,8 +21,7 @@ export const LoginPage = props => {
   const requiredValidate = [required()];
   const login = useLogin();
   const OnSave = props => {
-    const data = { ...props };
-    console.log(data);
+    //console.log(data);
     login({ ...props });
   };
 

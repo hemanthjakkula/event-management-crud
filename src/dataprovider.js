@@ -60,12 +60,20 @@ const dataProvider = {
 
   delete: (resource, params) => {
     const query = {
-      filter: JSON.stringify({ id: params.ids })
+      filter: JSON.stringify({ id: params.id })
     };
-    return httpClient(`${apiUrl}/delete_event.php?${stringify(query)}`, {
-      method: "DELETE",
-      body: JSON.stringify(params.data)
-    }).then(({ json }) => ({ data: json }));
+    return httpClient(
+      `${apiUrl}/delete_single_event.php/?${stringify(query)}`,
+      {
+        method: "DELETE",
+        body: JSON.stringify(params.data)
+      }
+    ).then(({ json }) => ({
+      data: json.map(resource => ({
+        ...resource,
+        id: resource.event_id
+      }))
+    }));
   },
 
   deleteMany: (resource, params) => {
@@ -75,7 +83,7 @@ const dataProvider = {
     return httpClient(`${apiUrl}/delete_event.php?${stringify(query)}`, {
       method: "DELETE",
       body: JSON.stringify(params.data)
-    }).then(({ json }) => ({ data: json }));
+    }).then(({ json }) => ({ data: json.event_id }));
   }
 };
 
