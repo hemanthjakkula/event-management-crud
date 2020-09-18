@@ -14,4 +14,4 @@
 
 ### User can also Download their events.
 
-### Please check DataProvider.js and AuthProvider.js Files for API calls and Authoorization.
+### Please check DataProvider.js and AuthProvider.js Files for API calls and Authorization.
